@@ -4,22 +4,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CustomerManagement.Data;
 using CustomerManagement.Models;
+using CustomerManagement.Repositories;
 using Microsoft.AspNetCore.Cors;
-
+using CustomerManagement.ViewModels.CustomerViewModels;
 namespace CustomerManagement.Controllers
 {
     public class CustomerController : Controller
     {
         private readonly CustomerRepository _repository;
 
-        public CustomerController(CustomerRepository _repository)
+        public CustomerController(CustomerRepository repository)
         {
             _repository = repository;
         }
 
         [Route("v1/customers")]
         [HttpGet]
-        public IEnumerable<Customer> Get()
+        public IEnumerable<ListCustomerViewModel> Get()
         {
             return _repository.Get();
         }
@@ -33,17 +34,8 @@ namespace CustomerManagement.Controllers
 
         [Route("v1/customers")]
         [HttpPost]
-        public Customer Post([FromBody] Customer customer)
+        public ResultViewModel Post([FromBody] Customer customer)
         {
-            customer.Validate();
-            if (customer.Invalid)
-                return new ResultViewModel
-                {
-                    Success = false,
-                    Message = "Não foi possível cadastrar o cliente",
-                    Data = model.Notifications
-                };
-
             _repository.Save(customer);
 
             return new ResultViewModel
@@ -56,16 +48,31 @@ namespace CustomerManagement.Controllers
 
         [Route("v1/customers")]
         [HttpPut]
-        public Customer Put([FromBody] Customer customer)
+        public ResultViewModel Put([FromBody] EditorCustomerViewModel model)
         {
-            customer.Validate();
-            if (customer.Invalid)
+            model.Validate();
+            if (model.Invalid)
                 return new ResultViewModel
                 {
                     Success = false,
                     Message = "Não foi possível alterar o cliente",
                     Data = model.Notifications
                 };
+
+            var customer = _repository.Get(model.Id);
+
+            customer.CNPJ = model.CNPJ;
+            customer.RazaoSocial = model.RazaoSocial;
+            customer.NomeFantasia = model.NomeFantasia;
+            customer.Email = model.Email;
+            customer.Telefone = model.Telefone;
+            customer.NomeContato = model.NomeContato;
+            customer.EnderecoCep = model.EnderecoCep;
+            customer.EnderecoLogradouro = model.EnderecoLogradouro;
+            customer.EnderecoNro = model.EnderecoNro;
+            customer.EnderecoBairro = model.EnderecoBairro;
+            customer.EnderecoCidade = model.EnderecoCidade;
+            customer.EnderecoEstado = model.EnderecoEstado;
 
             _repository.Update(customer);
 
@@ -79,7 +86,7 @@ namespace CustomerManagement.Controllers
 
         [Route("v1/customers")]
         [HttpDelete]
-        public Customer Delete([FromBody] Customer customer)
+        public ResultViewModel Delete([FromBody] Customer customer)
         {
             _repository.Remove(customer);
 

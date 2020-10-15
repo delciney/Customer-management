@@ -1,5 +1,3 @@
-using System;
-
 namespace CustomerManagement.ViewModels.CustomerViewModels
 {
     public class ListCustomerViewModel

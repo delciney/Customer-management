@@ -19,7 +19,7 @@ namespace CustomerManagement.Repositories
         public IEnumerable<ListCustomerViewModel> Get()
         {
             return _context
-                .Customers
+                .Customer
                 .Select(x => new ListCustomerViewModel
                 {
                     Id = x.Id,
@@ -41,11 +41,11 @@ namespace CustomerManagement.Repositories
         }
         public Customer Get(int id)
         {
-            return _context.Customers.Find(id);
+            return _context.Customer.Find(id);
         }
         public void Save(Customer customer)
         {
-            _context.Customers.Add(customer);
+            _context.Customer.Add(customer);
             _context.SaveChanges();
         }
         public void Update(Customer customer)

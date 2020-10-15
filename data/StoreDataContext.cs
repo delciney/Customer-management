@@ -6,7 +6,7 @@ namespace CustomerManagement.Data
 {
     public class StoreDataContext : DbContext
     {
-        public DbSet<LivingRoom> LivingRooms { get; set; }
+        public DbSet<Customer> Customer { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -15,8 +15,8 @@ namespace CustomerManagement.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new BookingMap());
-            builder.ApplyConfiguration(new LivingRoomMap());
+            builder.ApplyConfiguration(new CustomerMap());
+
         }
     }
 }
