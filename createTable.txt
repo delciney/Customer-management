@@ -1,0 +1,16 @@
+CREATE TABLE `Customer` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `CNPJ` varchar(14) NOT NULL,
+  `RazaoSocial` varchar(120) NOT NULL,
+  `NomeFantasia` varchar(120) DEFAULT NULL,
+  `Email` varchar(120) DEFAULT NULL,
+  `Telefone` varchar(11) DEFAULT NULL,
+  `NomeContato` varchar(120) DEFAULT NULL,
+  `EnderecoCep` varchar(9) DEFAULT NULL,
+  `EnderecoLogradouro` varchar(120) DEFAULT NULL,
+  `EnderecoNro` varchar(20) DEFAULT NULL,
+  `EnderecoBairro` varchar(60) DEFAULT NULL,
+  `EnderecoCidade` varchar(60) DEFAULT NULL,
+  `EnderecoEstado` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
