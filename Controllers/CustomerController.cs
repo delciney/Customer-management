@@ -84,10 +84,12 @@ namespace CustomerManagement.Controllers
             };
         }
 
-        [Route("v1/customers")]
+        [Route("v1/customers/{id}")]
         [HttpDelete]
-        public ResultViewModel Delete([FromBody] Customer customer)
+        public ResultViewModel Delete(int id)
         {
+            var customer = _repository.Get(id);
+            
             _repository.Remove(customer);
 
             return new ResultViewModel
